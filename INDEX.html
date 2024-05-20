@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora TMB e GET</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header, .footer {
+            width: 100%;
+            background-color: #000;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1, .footer p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        h2 {
+            margin: 20px 0;
+            font-size: 2em;
+            text-align: center;
+            font-family: 'Telegraf', sans-serif;
+            font-weight: bold;
+        }
+        .calculator {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultado {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>@thalysonpersonal</h1>
+    </div>
+
+    <h2>CALCULADORA TMB E GET</h2>
+    
+    <div class="calculator">
+        <div class="form-group">
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" name="peso" required>
+        </div>
+        <div class="form-group">
+            <label for="altura">Altura (cm):</label>
+            <input type="number" id="altura" name="altura" required>
+        </div>
+        <div class="form-group">
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" required>
+        </div>
+        <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" required>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="atividade">Nível de atividade:</label>
+            <select id="atividade" name="atividade" required>
+                <option value="sedentario">Sedentário</option>
+                <option value="leve">Leve</option>
+                <option value="moderado">Moderado</option>
+                <option value="ativo">Ativo</option>
+                <option value="muito ativo">Muito Ativo</option>
+            </select>
+        </div>
+        <button onclick="calcular()">Calcular</button>
+        <div id="resultado"></div>
+    </div>
+
+    <div class="footer">
+        <p>@thalysonpersonal</p>
+    </div>
+
+    <script>
+        function calcular() {
+            var peso = parseFloat(document.getElementById('peso').value);
+            var altura = parseFloat(document.getElementById('altura').value) / 100; // Convertendo altura para metros
+            var idade = parseInt(document.getElementById('idade').value);
+            var sexo = document.getElementById('sexo').value;
+            var atividade = document.getElementById('atividade').value;
+            var metabolismo_basal;
+
+            if (sexo === 'masculino') {
+                metabolismo_basal = 66 + (13.75 * peso) + (5 * altura * 100) - (6.75 * idade);
+            } else {
+                metabolismo_basal = 655 + (9.56 * peso) + (1.85 * altura * 100) - (4.68 * idade);
+            }
+
+            var gasto_energetico_total;
+
+            switch (atividade) {
+                case 'sedentario':
+                    gasto_energetico_total = metabolismo_basal * 1.2;
+                    break;
+                case 'leve':
+                    gasto_energetico_total = metabolismo_basal * 1.375;
+                    break;
+                case 'moderado':
+                    gasto_energetico_total = metabolismo_basal * 1.55;
+                    break;
+                case 'ativo':
+                    gasto_energetico_total = metabolismo_basal * 1.725;
+                    break;
+                case 'muito ativo':
+                    gasto_energetico_total = metabolismo_basal * 1.9;
+                    break;
+                default:
+                    gasto_energetico_total = "Nível de atividade inválido";
+            }
+
+            document.getElementById('resultado').innerHTML = "Metabolismo Basal: " + metabolismo_basal.toFixed(2) + " kcal/dia<br>Gasto Energético Total: " + gasto_energetico_total.toFixed(2) + " kcal/dia";
+        }
+    </script>
+</body>
+</html>
